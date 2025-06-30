@@ -4,23 +4,24 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { User } from '../../schema/user.entity';
-import { HttpException } from '../../exceptions/http-exception';
 import { CreateUserDto, LoginUserDto } from '../../dto/auth.dto';
-import { plainToInstance } from 'class-transformer';
-import { validate } from 'class-validator';
+import { DtoValidatorService } from '../../common/validations/dto-validator.service';
+import { HttpException } from '../../common/exceptions/http-exception';
 
 @Injectable()
 export class AuthService {
     constructor(
         @InjectRepository(User)
         private readonly _user: Repository<User>,
+
         private readonly _jwtService: JwtService,
         private _httpException: HttpException,
+        private _dtoValidatorService: DtoValidatorService
     ) { }
 
     async store(data) {
         try {
-            const validate = await this._validateBody(CreateUserDto, data);
+            const validate = await this._dtoValidatorService.validateBody(CreateUserDto, data);
             if (validate?.status === 400) {
                 return await this._httpException.responseHelper(400, await validate.message);
             }
@@ -50,7 +51,7 @@ export class AuthService {
 
     async login(data) {
         try {
-            const validate = await this._validateBody(LoginUserDto, data);
+            const validate = await this._dtoValidatorService.validateBody(LoginUserDto, data);
             if (validate?.status === 400) {
                 return await this._httpException.responseHelper(400, validate.message);
             }
@@ -90,27 +91,6 @@ export class AuthService {
         } catch (error) {
             console.error('JWT error:', error.message);
             return undefined;
-        }
-    }
-
-    private async _validateBody(dto: any, data: any) {
-        try {
-            if (!dto) return;
-
-            const instance = plainToInstance(dto, data);
-            const errors = await validate(instance);
-
-            if (errors.length > 0) {
-                const messages = errors
-                    .map(err => (err.constraints ? Object.values(err.constraints) : []))
-                    .flat();
-
-                return this._httpException.responseHelper(400, messages.join(', '));
-            }
-
-        } catch (error) {
-            console.error(error.message);
-            return await this._httpException.responseHelper(500, 'Internal Server Error');
         }
     }
 }
