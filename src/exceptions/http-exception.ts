@@ -1,7 +1,7 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 
 @Injectable()
-export class HttpExceptionStrategy {
+export class HttpException {
   async responseHelper(statusCode: number, message: any) {
     const statusMap = {
       200: HttpStatus.OK,
