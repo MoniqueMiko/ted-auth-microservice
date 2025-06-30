@@ -32,7 +32,12 @@ export class AuthService {
                 return await this._httpException.responseHelper(409, 'Email already exists');
             }
 
-            const user = this._user.create({ email: data.email, password: hashed, fullName: data.fullName });
+            const user = this._user.create({
+                email: data.email,
+                password: hashed,
+                fullName: data.fullName
+            });
+
             await this._user.save(user);
 
             return await this._httpException.responseHelper(201, 'Success');
