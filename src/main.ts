@@ -23,7 +23,7 @@ async function bootstrap() {
   });
 
   await app.listen();
-  logger.log('Microservice is listening');
+  logger.log('Auth Microservice is listening');
 }
 
 bootstrap().catch((err) => {

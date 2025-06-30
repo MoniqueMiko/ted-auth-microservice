@@ -3,15 +3,15 @@ import { AuthService } from './auth.service';
 import { JwtService } from '@nestjs/jwt';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from '../schema/user.entity';
-import { HttpExceptionStrategy } from '../../exceptions/http-exception';
+import { User } from '../../schema/user.entity';
+import { HttpException } from '../../exceptions/http-exception';
 import * as bcrypt from 'bcrypt';
 
 describe('AuthService', () => {
   let service: AuthService;
   let userRepo: jest.Mocked<Repository<User>>;
   let jwtService: jest.Mocked<JwtService>;
-  let exceptionStrategy: jest.Mocked<HttpExceptionStrategy>;
+  let exception: jest.Mocked<HttpException>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -32,7 +32,7 @@ describe('AuthService', () => {
           },
         },
         {
-          provide: HttpExceptionStrategy,
+          provide: HttpException,
           useValue: {
             responseHelper: jest.fn(),
           },
@@ -43,7 +43,7 @@ describe('AuthService', () => {
     service = module.get<AuthService>(AuthService);
     userRepo = module.get(getRepositoryToken(User));
     jwtService = module.get(JwtService);
-    exceptionStrategy = module.get(HttpExceptionStrategy);
+    exception = module.get(HttpException);
   });
 
   describe('store', () => {
@@ -61,7 +61,7 @@ describe('AuthService', () => {
         fullName: 'Test Name',
       } as unknown as User);
 
-      exceptionStrategy.responseHelper.mockResolvedValue({
+      exception.responseHelper.mockResolvedValue({
         status: 500,
         message: 'Email already exists',
       });
@@ -90,7 +90,7 @@ describe('AuthService', () => {
         password: 'hashed',
       } as unknown as User);
       jest.spyOn(bcrypt, 'hash').mockResolvedValue('hashed');
-      exceptionStrategy.responseHelper.mockResolvedValue({
+      exception.responseHelper.mockResolvedValue({
         status: 201,
         message: 'Success',
       });
@@ -106,7 +106,7 @@ describe('AuthService', () => {
       const dto = { email: 'notfound@mail.com', password: '123456' };
 
       userRepo.findOne.mockResolvedValue(null);
-      exceptionStrategy.responseHelper.mockResolvedValue({
+      exception.responseHelper.mockResolvedValue({
         status: 401,
         message: 'Email not found',
       });
@@ -127,7 +127,7 @@ describe('AuthService', () => {
       } as unknown as User);
 
       jest.spyOn(bcrypt, 'compare').mockResolvedValue(false);
-      exceptionStrategy.responseHelper.mockResolvedValue({
+      exception.responseHelper.mockResolvedValue({
         status: 401,
         message: 'Invalid password',
       });
@@ -150,7 +150,7 @@ describe('AuthService', () => {
       userRepo.findOne.mockResolvedValue(mockUser);
       jest.spyOn(bcrypt, 'compare').mockResolvedValue(true);
       jwtService.sign.mockReturnValue('fake-jwt');
-      exceptionStrategy.responseHelper.mockResolvedValue({
+      exception.responseHelper.mockResolvedValue({
         status: 200,
         message: {
           jwt: { access_token: 'fake-jwt' },
