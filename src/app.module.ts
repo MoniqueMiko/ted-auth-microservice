@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
 import { AuthController } from './auth/controllers/auth.controller';
 import { AuthService } from './auth/services/auth.service';
-import { HttpException } from './exceptions/http-exception';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './schema/user.entity';
+import { DtoValidatorService } from './common/validations/dto-validator.service';
+import { HttpException } from './common/exceptions/http-exception';
 
 @Module({
   imports: [
@@ -34,6 +35,6 @@ import { User } from './schema/user.entity';
     TypeOrmModule.forFeature([User]),
   ],
   controllers: [AuthController],
-  providers: [AuthService, HttpException],
+  providers: [AuthService, HttpException, DtoValidatorService],
 })
 export class AppModule { }

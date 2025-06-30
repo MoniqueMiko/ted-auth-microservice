@@ -1,7 +1,7 @@
 import { validate } from 'class-validator';
 import { CreateUserDto, LoginUserDto } from './auth.dto';
 
-describe('CreateUserDto', () => {
+describe('DTO Test', () => {
   it('should be valid with all correct fields', async () => {
     const dto = new CreateUserDto();
     dto.email = 'user@email.com';
@@ -71,9 +71,7 @@ describe('CreateUserDto', () => {
     const errors = await validate(dto);
     expect(errors.some(e => e.property === 'password')).toBeTruthy();
   });
-});
 
-describe('LoginUserDto', () => {
   it('should be valid with correct email and password', async () => {
     const dto = new LoginUserDto();
     dto.email = 'login@email.com';
