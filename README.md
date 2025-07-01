@@ -1,4 +1,4 @@
-# Ted API Gateway App
+# Ted Auth Microservice
 
 This project is an **Autentication Microservice** built with [NestJS](https://nestjs.com/) that communicates with microservices via **Redis**. It uses **JWT for authentication** and is fully written in TypeScript.
 
