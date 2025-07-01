@@ -58,7 +58,7 @@ export class AuthService {
 
             const user = await this._user.findOne({ where: { email: data.email } });
             if (!user) {
-                return await this._httpException.responseHelper(400, 'Email not found');
+                return await this._httpException.responseHelper(404, 'Email not found');
             }
 
             const valid = await bcrypt.compare(data.password, user.password);
