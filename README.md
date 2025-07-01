@@ -1,98 +1,131 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Ted API Gateway App
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This project is an **Autentication Microservice** built with [NestJS](https://nestjs.com/) that communicates with microservices via **Redis**. It uses **JWT for authentication** and is fully written in TypeScript.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 📦 Main Technologies
 
-## Description
+- [NestJS v11](https://docs.nestjs.com/)
+- [Redis](https://redis.io/)
+- [JWT](https://jwt.io/)
+- [RxJS](https://rxjs.dev/)
+- [Jest](https://jestjs.io/)
+- [ESLint](https://eslint.org/) + [Prettier](https://prettier.io/) for formatting and linting
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+---
 
-## Project setup
+## 🚀 Available Scripts
 
-```bash
-$ npm install
-```
+| Command               | Description                                    |
+|----------------------|-------------------------------------------------|
+| `npm run start`      | Starts the application                          |
+| `npm run start:dev`  | Starts with watch mode (development)            |
+| `npm run start:debug`| Starts in debug mode                            |
+| `npm run start:prod` | Starts in production mode (compiled)            |
+| `npm run build`      | Compiles the project (dist/)                    |
+| `npm run format`     | Formats files using Prettier                    |
+| `npm run lint`       | Runs ESLint on `.ts` files                      |
+| `npm run test`       | Runs unit tests                                 |
+| `npm run test:watch` | Runs unit tests in watch mode                   |
+| `npm run test:cov`   | Runs tests with coverage report                 |
+| `npm run test:e2e`   | Runs end-to-end tests                           |
 
-## Compile and run the project
+---
 
-```bash
-# development
-$ npm run start
+## 🔄 Redis
+Communication between microservices is done via Redis (pub/sub mode), using NestJS’s `ClientProxy` with `REDIS` transport.  
+Make sure Redis is running locally (default port `6379`).
 
-# watch mode
-$ npm run start:dev
+---
 
-# production mode
-$ npm run start:prod
-```
+## 🧪 Tests
 
-## Run tests
+- Unit tests are located in `*.spec.ts` files.  
+- To run tests with coverage:
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm run test:cov
 ```
 
-## Deployment
+---
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+## 📁 Project Structure
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+```
+src/
+├── auth/                   
+│   ├── controllers/               # Authentication route controllers
+│   │   ├── auth.controller.spec.ts
+│   │   └── auth.controller.ts
+├   |── services/                  # Authentication business logic services
+│   │   ├── auth.service.spec.ts
+│   │   └── auth.service.ts  
+├── common/                        # Reusable common code across modules
+│   ├── exceptions/                # Custom exception handling
+│   │   ├── http-exception.spec.ts
+│   │   └── http-exception.ts    
+│   ├── validations/               # Data validation according to DTOs
+│   │   ├── dto-validator.service.spec.ts
+│   │   └── dto-validator.service.ts               
+├── dto/                           # DTOs used for Swagger documentation and validation
+│   ├── auth.dto.spec.ts
+│   └── auth.dto.ts
+├── schema/                         # Auth entities          
+│   ├── user.entity.spec.ts
+│   └── user.entity.ts
+├── app.module.ts                  # Root module of the application
+└── main.ts                        # Application entry point
+
+```
+
+---
+
+## ⚙️ Requirements
+
+* Node.js 18+
+* Redis running locally
+* Environment variables in .env file, including:
+
+```
+
+JWT_SECRET= yoursecretkey
+REDIS_PORT = 6379
+REDIS_HOST = localhost
+DATABASE_URL= yoursecretkey
+
+```
+---
+
+## 🔗 Related Microservices
+
+- [🔗 Api Gateway (NestJS)](https://github.com/MoniqueMiko/ted-api-gateway-app)
+- [🧩 Url Shortener Microservice (NestJS)](https://github.com/MoniqueMiko/ted-url-shortener-microservice)
+
+---
+
+## 🛠️ Build
+
+To compile the project:
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npm run build
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+The compiled code will be generated in the dist/ folder.
 
-## Resources
+---
 
-Check out a few resources that may come in handy when working with NestJS:
+## 🧭  Future Improvements
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+- Create history tracking for updates and deletions of shortened URLs.
+- Add pagination to URL listings.
+- Create endpoint to deactivate a user.
 
-## Support
+---
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## 🧑‍💻 Author
+- 👩‍💻 Monique Lourenço -> monique_lourenzia@hotmail.com
+---
 
-## Stay in touch
+## 📄 License
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+This project is UNLICENSED. Usage is restricted as specified.
