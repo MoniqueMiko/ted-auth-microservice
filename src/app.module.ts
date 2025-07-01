@@ -26,9 +26,6 @@ import { HttpException } from './common/exceptions/http-exception';
         url: config.get('DATABASE_URL'),
         entities: [User],
         synchronize: true,
-        ssl: {
-          rejectUnauthorized: false,
-        },
       }),
       inject: [ConfigService],
     }),
