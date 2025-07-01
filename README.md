@@ -5,11 +5,16 @@ This project is an **Autentication Microservice** built with [NestJS](https://ne
 ## 📦 Main Technologies
 
 - [NestJS v11](https://docs.nestjs.com/)
-- [Redis](https://redis.io/)
-- [JWT](https://jwt.io/)
+- [Redis (ioredis)](https://redis.io/)
+- [PostgreSQL (pg)](https://www.postgresql.org/)
+- [TypeORM](https://typeorm.io/)
+- [JWT (@nestjs/jwt)](https://jwt.io/)
+- [Bcrypt](https://github.com/kelektiv/node.bcrypt.js) — password hashing
 - [RxJS](https://rxjs.dev/)
 - [Jest](https://jestjs.io/)
-- [ESLint](https://eslint.org/) + [Prettier](https://prettier.io/) for formatting and linting
+- [ESLint](https://eslint.org/)
+- [Prettier](https://prettier.io/)
+- [TypeScript](https://www.typescriptlang.org/)
 
 ---
 
