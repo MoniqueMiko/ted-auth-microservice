@@ -71,7 +71,7 @@ src/
 │   ├── validations/               # Data validation according to DTOs
 │   │   ├── dto-validator.service.spec.ts
 │   │   └── dto-validator.service.ts               
-├── dto/                           # DTOs used for Swagger documentation and validation
+├── dto/                           # DTOs used for validation
 │   ├── auth.dto.spec.ts
 │   └── auth.dto.ts
 ├── schema/                         # Auth entities          
