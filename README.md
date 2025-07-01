@@ -9,7 +9,7 @@ This project is an **Autentication Microservice** built with [NestJS](https://ne
 - [PostgreSQL (pg)](https://www.postgresql.org/)
 - [TypeORM](https://typeorm.io/)
 - [JWT (@nestjs/jwt)](https://jwt.io/)
-- [Bcrypt](https://github.com/kelektiv/node.bcrypt.js) — password hashing
+- [Bcrypt](https://github.com/kelektiv/node.bcrypt.js)
 - [RxJS](https://rxjs.dev/)
 - [Jest](https://jestjs.io/)
 - [ESLint](https://eslint.org/)
