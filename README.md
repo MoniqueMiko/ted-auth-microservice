@@ -116,9 +116,8 @@ The compiled code will be generated in the dist/ folder.
 
 ## 🧭  Future Improvements
 
-- Create history tracking for updates and deletions of shortened URLs.
-- Add pagination to URL listings.
-- Create endpoint to deactivate a user.
+- Create endpoint to deactivate or update a user  
+- Implement SSO login in the future  
 
 ---
 
